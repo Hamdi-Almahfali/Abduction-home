@@ -51,7 +51,11 @@ public class scrMovement : MonoBehaviour
     }
     private void MovePlayer()
     {
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        Vector3 forward = new Vector3(orientation.forward.x, 0, orientation.forward.z).normalized;
+        Vector3 right = new Vector3(orientation.right.x, 0, orientation.right.z).normalized;
+
+        // Create movement direction
+        moveDirection = forward * verticalInput + right * horizontalInput;
 
         rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
     }

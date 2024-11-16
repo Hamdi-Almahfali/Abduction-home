@@ -78,7 +78,8 @@ public class scrPlayerAdvancedCam : MonoBehaviour
 
             //Rotate
             transform.localRotation = originalRotation * xQuaternion * yQuaternion;
-            orientation.rotation = originalRotation * xQuaternion * yQuaternion;
+            orientation.localRotation = originalRotation * xQuaternion * yQuaternion;
+
         }
         else if (axes == RotationAxes.MouseX)
         {
