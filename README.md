@@ -1,7 +1,8 @@
 # **Abduction Home**
 
-## 👻 **About the Game**
+## **About the Game**
 Abduction Home is a Ps1 style horror experience delving in the business of an abduction organization.
+
  ![ADH](Assets/ADH.png)
 
  ## **Disclaimer**
