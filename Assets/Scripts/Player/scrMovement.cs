@@ -7,9 +7,16 @@ public class scrMovement : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed;
 
-    public float groundDrag;
-    public float airDrag;
-    public float gravity;
+    [SerializeField] float groundDrag;
+    [SerializeField] float airDrag;
+    [SerializeField] float gravity;
+
+    [SerializeField] GameObject stepRayUpper ;
+    [SerializeField] GameObject stepRayLower ;
+
+    [SerializeField] float stepHeight = 0.3f;
+    [SerializeField] float stepSmooth;
+    [SerializeField] float checkDist;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -31,6 +38,8 @@ public class scrMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         Physics.gravity = new Vector3(0f, gravity, 0f);
+
+        //stepRayUpper.transform.position = new Vector3(stepRayUpper.transform.position.x, stepHeight, stepRayUpper.transform.position.z);
     }
 
     // Update is called once per frame
@@ -45,6 +54,7 @@ public class scrMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+        StepClimb();
     }
 
     private void MyInput()
@@ -61,5 +71,25 @@ public class scrMovement : MonoBehaviour
         moveDirection = forward * verticalInput + right * horizontalInput;
 
         rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+    }
+    void StepClimb()
+    {
+        RaycastHit hitLower;
+
+        // Cast the lower ray
+        if (Physics.Raycast(stepRayLower.transform.position, transform.TransformDirection(Vector3.forward), out hitLower, checkDist))
+        {
+            Debug.Log("Lower hit");
+
+            // Cast the upper ray
+            RaycastHit hitUpper;
+            if (!Physics.Raycast(stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, checkDist))
+            {
+                Debug.Log("Upper not hit");
+
+                // Smoothly adjust the position upwards
+                rb.position += new Vector3(0f, stepSmooth, 0f);
+            }
+        }
     }
 }

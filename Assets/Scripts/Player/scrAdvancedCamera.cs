@@ -21,12 +21,15 @@ public class scrPlayerAdvancedCam : MonoBehaviour
     float rotAverageY = 0F;
     public float frameCounter = 20;
     Quaternion originalRotation;
+    float startingFOV;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         
         originalRotation = transform.localRotation;
+
+        startingFOV = Camera.main.fieldOfView;
     }
     void Update()
     {
@@ -117,7 +120,15 @@ public class scrPlayerAdvancedCam : MonoBehaviour
             Quaternion yQuaternion = Quaternion.AngleAxis(rotAverageY, Vector3.left);
             transform.localRotation = originalRotation * yQuaternion;
         }
-
+        // Zoom in if right click held
+        if (Input.GetMouseButton(1))
+        {
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, startingFOV - 30, 9f * Time.deltaTime);
+        }
+        else
+        {
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, startingFOV, 5f * Time.deltaTime);
+        }
     }
     public static float ClampAngle(float angle, float min, float max)
     {
