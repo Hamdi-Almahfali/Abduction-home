@@ -8,6 +8,8 @@ public class scrMovement : MonoBehaviour
     public float moveSpeed;
 
     public float groundDrag;
+    public float airDrag;
+    public float gravity;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -28,6 +30,7 @@ public class scrMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        Physics.gravity = new Vector3(0f, gravity, 0f);
     }
 
     // Update is called once per frame
@@ -37,7 +40,7 @@ public class scrMovement : MonoBehaviour
         MyInput();
 
         //Drag
-        rb.drag = grounded ? groundDrag : 0;
+        rb.drag = grounded ? groundDrag : airDrag;
     }
     private void FixedUpdate()
     {
