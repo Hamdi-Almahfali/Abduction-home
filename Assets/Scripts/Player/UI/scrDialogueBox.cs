@@ -55,10 +55,12 @@ public class scrDialogueBox : MonoBehaviour
             {
                 StopAllCoroutines();
                 dialogueTextComponent.text = textLines[index];
+                return;
             }
             else if (index >= textLines.Length - 1)
             {
                 CloseDialogueBox();
+                return;
             }
             NextLine();
         }

@@ -18,17 +18,23 @@ public class scrDamageGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Ray gunRay = new Ray(playerCamera.position, playerCamera.forward);
+        if (Physics.Raycast(gunRay, out RaycastHit hitInfo, bulletRange))
+        {
+            Debug.Log(hitInfo.ToString());
+
+        }
     }
     public void Shoot()
     {
         Ray gunRay = new Ray(playerCamera.position, playerCamera.forward);
         if (Physics.Raycast(gunRay, out RaycastHit hitInfo, bulletRange))
         {
-            //if (hitInfo.collider.gameObject.TryGetComponent(out Entity enemy))
-            //{
-
-            //} 
+            if (hitInfo.collider.gameObject.TryGetComponent(out Entity enemy))
+            {
+                enemy.Damage(damage);
+                Debug.Log("Damaged");
+            }
         }
         audioSource.Play();
     }

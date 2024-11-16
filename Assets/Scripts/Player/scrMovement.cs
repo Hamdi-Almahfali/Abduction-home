@@ -79,13 +79,13 @@ public class scrMovement : MonoBehaviour
         // Cast the lower ray
         if (Physics.Raycast(stepRayLower.transform.position, transform.TransformDirection(Vector3.forward), out hitLower, checkDist))
         {
-            Debug.Log("Lower hit");
+            //Debug.Log("Lower hit");
 
             // Cast the upper ray
             RaycastHit hitUpper;
             if (!Physics.Raycast(stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, checkDist))
             {
-                Debug.Log("Upper not hit");
+                //Debug.Log("Upper not hit");
 
                 // Smoothly adjust the position upwards
                 rb.position += new Vector3(0f, stepSmooth, 0f);
